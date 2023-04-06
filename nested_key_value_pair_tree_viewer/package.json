@@ -1,0 +1,23 @@
+{
+  "name": "nested_key_value_pair_tree_viewer",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "vue": "^3.2.47"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "pug": "^3.0.2",
+    "sass": "^1.60.0",
+    "tailwindcss": "^3.3.1",
+    "vite": "^4.2.0"
+  }
+}
