@@ -1,55 +1,63 @@
 <template lang="pug">
-.w-full.h-full.flex.justify-center.items-center
-  .max-w-md.max-h-96.bg-slate-200.border-2.border-slate-300.p-2(class="w-11/12 h-5/6")
-    .flex.flex-col
-      h2.text-2xl 登入
-      form(@submit.prevent="login")
-        .flex.flex-col
-          label(for="email") Email:
-          input#email.border-2.border-slate-300(
+.w-full.h-full.flex.justify-center.items-center.bg-slate-50
+  .absolute.top-4.left-4
+    RouterLink.text-xl.font-bold(to="/") {{ "Back Home" }}
+  .max-w-xs.max-h-96.bg-white.p-8.shadow-lg.shadow-slate-300.rounded-lg(
+    class="w-11/12 h-5/6"
+  )
+    .flex.flex-col.items-center.h-full.gap-4
+      h2.text-2xl {{ "Login" }}
+      form.grow.flex.flex-col.w-full.gap-5(@submit.prevent="login")
+        .flex.flex-col.gap-2
+          label(for="email") {{ "Email" }}
+          input#email.border.border-slate-300.rounded.h-8.px-2.text-sm(
             v-model="user.email",
             type="email",
             name="email",
+            placeholder="Enter Email",
             required
           )
-        .flex.flex-col
-          label(for="password") 密碼:
-          input#password(
+        .flex.flex-col.gap-2
+          label(for="password") {{ "密碼" }}
+          input#password.border.border-slate-300.rounded.h-8.px-2.text-sm(
             v-model="user.pwd",
             type="password",
             name="password",
+            autocomplete="on",
+            placeholder="Enter Password",
             required
           )
-        input(type="submit", value="登入")
-        .flex.gap-2
-          span Don't have account?
-          RouterLink(to="/register") Sign Up
+        input.bg-blue-700.rounded.cursor-pointer.text-white.text-sm.py-2.shadow-lg(
+          type="submit",
+          value="Login",
+          class="hover:shadow-slate-400"
+        )
+        .flex.gap-2.justify-center
+          span.text-slate-400.text-sm {{  "Don't have account?"  }}
+          RouterLink.text-sky-600.text-sm(to="/register") {{ "Sign Up" }}
 </template>
 
 
 <script>
-import { RouterLink } from "vue-router";
-import "firebase/compat/auth";
-import firebase from "../utils/firebase";
+import { reactive } from "vue";
+import { useRouter } from "vue-router";
+import firebase from "@/utils/firebase";
 export default {
-  data() {
-    return {
-      user: {
-        email: "",
-        pwd: "",
-      },
-    };
-  },
-  methods: {
-    login() {
-      console.log("user", this.user);
-      const { email, pwd } = this.user;
+  setup() {
+    const router = useRouter();
+    const user = reactive({ email: "", pwd: "" });
+
+    const login = () => {
+      const { email, pwd } = user;
+
       firebase
         .auth()
         .signInWithEmailAndPassword(email, pwd)
         .then((res) => {
+          console.log("res", res);
+
           alert("success");
-          this.$router.push({ path: "/" });
+          router.push({ path: "/" });
         })
         .catch((error) => {
           console.log("error code", error.code);
@@ -68,12 +76,10 @@ export default {
               break;
           }
         });
+    };
 
-      console.log("asdasdas", this.user);
-    },
+    return { user, login };
   },
 };
 </script>
 
-<style>
-</style>

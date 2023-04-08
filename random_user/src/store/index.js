@@ -16,6 +16,7 @@ export default createStore({
 
     // 控制 popup
     isPopup: false,
+    popupData: {},
   },
   mutations: {
     setState(state, payload) {

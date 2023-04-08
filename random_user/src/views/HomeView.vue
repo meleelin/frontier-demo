@@ -3,15 +3,7 @@ Header
 #main-content.py-4.mx-auto.max-w-screen-xl(class="w-11/12")
   .flex.flex-col.h-full.gap-4
     .flex.justify-between.items-center
-      .flex.gap-2
-        span.underline.cursor-pointer(
-          :class="filter === 'all' ? 'text-indigo-600' : 'text-indigo-300'",
-          @click="changeFilter('all')"
-        ) {{ "ALL" }}
-        span.underline.cursor-pointer(
-          :class="filter === 'favorite' ? 'text-indigo-600' : 'text-indigo-300'",
-          @click="changeFilter('favorite')"
-        ) {{ "Favorite" }}
+      Filter
       .flex.gap-2.items-center
         Dropdown
         Switch
@@ -27,6 +19,9 @@ Modal(v-if="isPopup")
 </template>
 
 <script>
+import { computed } from "vue";
+import { useStore } from "vuex";
+
 import Header from "@/components/Header.vue";
 import Dropdown from "@/components/Dropdown.vue";
 import Switch from "@/components/Switch.vue";
@@ -34,8 +29,7 @@ import Modal from "@/components/Modal.vue";
 import Pagination from "@/components/Pagination.vue";
 import Card from "@/components/Card.vue";
 import List from "@/components/List.vue";
-
-import { mapState, mapMutations } from "vuex";
+import Filter from "@/components/Filter.vue";
 
 export default {
   components: {
@@ -46,21 +40,25 @@ export default {
     Modal,
     Pagination,
     List,
+    Filter,
   },
-  computed: {
-    ...mapState({
-      isPopup: (state) => state.isPopup,
-      displayMode: (state) => state.displayMode,
-      filter: (state) => state.filter,
-    }),
-  },
-  methods: {
-    ...mapMutations({
-      setState: "setState",
-    }),
-    changeFilter(param) {
-      this.setState({ key: "filter", value: param });
-    },
+  setup() {
+    const store = useStore();
+
+    const isPopup = computed(() => store.state.isPopup);
+    const displayMode = computed(() => store.state.displayMode);
+    const filter = computed(() => store.state.filter);
+
+    const setState = (key, value) => {
+      store.commit("setState", { key, value });
+    };
+
+    const changeFilter = (param) => {
+      setState("filter", param);
+      setState("currentPage", 1);
+    };
+
+    return { isPopup, displayMode, filter, changeFilter };
   },
 };
 </script>
