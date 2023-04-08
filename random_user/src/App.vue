@@ -1,8 +1,5 @@
 <template lang="pug">
 .w-full.h-full.flex.flex-col
-  #bg_wrapper
-    .bg-1
-    .bg-2
   router-view
 </template>
 
@@ -85,14 +82,13 @@ export default {
     const getRandomUserData = async () => {
       try {
         const prefix = "https://randomuser.me/api";
-        const total = 301;
+        const total = 3010;
         const seed = "fe4f7e762a6ecd08";
         const res = await axios.get(`${prefix}?&results=${total}&seed=${seed}`);
+
         if (res.status === 200) {
           const { results } = res.data;
           store.commit("setState", { key: "fetchData", value: results });
-        } else {
-          alert("status not 200");
         }
       } catch (error) {
         alert("unknown error");
@@ -108,9 +104,10 @@ export default {
     };
 
     window.addEventListener("beforeunload", onBeforeUnload);
+    window.addEventListener("pagehide", onBeforeUnload);
 
     getUserInfo();
-    getRandomUserData();
+    // getRandomUserData();
 
     return {};
   },
@@ -127,36 +124,4 @@ body
   width: 100vw
   height: 100dvh
   overflow: hidden
-
-#bg_wrapper
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  width: 100%
-  height: 100%
-  z-index: -1
-  filter: blur(5px)
-
-.bg-1
-  position: absolute
-  top: 64px
-  left: 0
-  transform: translate(-50%,-50%)
-  width: 35vw
-  height: 35vw
-  border-radius: 999px
-  background-color: rgb(252 211 77)
-  filter: blur(5px)
-.bg-2
-  position: absolute
-  right: 0
-  bottom: 0
-  transform: translate(50%,50%)
-  width: 35vw
-  height: 35vw
-  border-radius: 999px
-  background-color: rgb(252 211 77)
-  filter: blur(5px)
 </style>

@@ -34,7 +34,7 @@ export default {
       // 重新計算有多少頁
       let totalPage;
       if (filter.value === "all") {
-        totalPage = Math.ceil(301 / countValue);
+        totalPage = Math.ceil(3010 / countValue);
       } else {
         totalPage = Math.ceil(collected.value.length / countValue);
       }
