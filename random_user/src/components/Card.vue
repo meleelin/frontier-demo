@@ -8,8 +8,9 @@
         class="aspect-[3/4]"
       )
         .w-full.overflow-hidden.loading(class="h-1/2")
-        .flex.flex-col.justify-between.p-2(class="h-1/2")
-          p.loading
+        .flex.flex-col.p-2.gap-2(class="h-1/2")
+          span.loading.rounded-sm
+          span.loading.rounded-sm
   template(v-else)
     template(v-for="(item, index) in pageFetchData", :key="index")
       .cursor-pointer.rounded-lg.border.border-slate-300.bg-white.overflow-hidden.shadow-slate-200.shadow-lg(
@@ -68,7 +69,7 @@ export default {
       switch (filter.value) {
         case "all":
           slice = fetchData.value.slice(begin, end);
-          totalPage = Math.ceil(301 / count.value);
+          totalPage = Math.ceil(3010 / count.value);
           break;
         case "favorite":
           const collectedArr = fetchData.value.filter((item) => {
@@ -139,7 +140,7 @@ export default {
 <style lang="sass" scoped>
 .loading
   background-color: rgb(209 213 219)
-  min-height: 30px
+  min-height: 20px
   position: relative
   overflow: hidden
 

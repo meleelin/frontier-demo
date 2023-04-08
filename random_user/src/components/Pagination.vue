@@ -4,7 +4,7 @@ template(v-if="currentPage !== 1")
     @click="prevPage"
   )
     span {{ "<" }}
-template(v-if="totalPage < 4")
+template(v-if="totalPage <= 4")
   template(v-for="index in totalPage")
     .w-8.h-8.flex.justify-center.items-center.cursor-pointer(
       @click="changePage(index)",

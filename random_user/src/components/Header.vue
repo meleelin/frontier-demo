@@ -2,17 +2,14 @@
 .w-full.h-16.bg-white.shadow-md.shrink-0
   .mx-auto.h-full.max-w-screen-xl(class="w-11/12")
     .flex.justify-between.items-center.h-full 
-      |
-      |
-      |
       RouterLink.text-xl.font-bold(to="/") {{ "Random User" }}
       template(v-if="userData")
-        .px-4.border-2.border-slate-600.rounded-full.cursor-pointer.shadow-slate-200(
+        .px-4.border.border-slate-600.rounded-full.cursor-pointer.shadow-slate-200(
           class="hover:shadow-lg",
           @click="logout"
         ) {{ "登出" }}
       template(v-else)
-        RouterLink.px-4.border-2.border-slate-600.rounded-full.shadow-slate-200(
+        RouterLink.px-4.border.border-slate-600.rounded-full.shadow-slate-200(
           class="hover:shadow-lg",
           to="/login"
         ) {{ "登入 / 註冊" }}
