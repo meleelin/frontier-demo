@@ -18,6 +18,8 @@ div
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   name: "Menu",
   props: {
@@ -25,10 +27,9 @@ export default {
       type: Object,
     },
   },
-  data() {
-    return {
-      isOpen: true,
-    };
+  setup(props) {
+    const isOpen = ref(true);
+    return { props, isOpen };
   },
 };
 </script>
