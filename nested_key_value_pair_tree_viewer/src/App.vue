@@ -1,7 +1,7 @@
 <template lang="pug">
 .w-full.h-full.bg-yellow-400.py-4
   .max-w-screen-xl.mx-auto.mb-4(class="w-11/12")
-    h1.text-4xl.font-bold.text-white Nested Key-Value Pair Tree Viewer
+    h1.text-4xl.font-bold.text-white {{ "Nested Key-Value Pair Tree Viewer" }}
   .max-w-screen-xl.mx-auto(class="h-5/6 w-11/12")
     .flex.gap-4.h-full
       .border.bg-white.p-8.border-slate-500(class="w-2/4")
@@ -9,7 +9,7 @@
           @click="addKeyValuePair",
           class="hover:shadow-lg"
         )
-          span.text-xl + Add new Pair
+          span.text-xl {{ "+ Add New Pair" }}
         .flex.gap-4.mt-4(v-for="index in count", :key="index")
           .grow.h-10.bg-white
             input.bg-transparent.outline-none.border.text-slate-200.border-slate-500.text-xl.px-2.py-1.w-full.h-full.text-slate-800(
@@ -34,58 +34,80 @@
 </template>
 
 <script>
-import Menu from "./components/Menu.vue";
-import { arrayToTree } from "./utils/arrayToTree";
-import { textSplit } from "./utils/textSplit";
+import Menu from "@/components/Menu.vue";
+import { arrayToTree } from "@/utils/arrayToTree";
+import { textSplit } from "@/utils/textSplit";
+import { onMounted, ref } from "vue";
 
 export default {
-  components: {
-    Menu,
-  },
-  data() {
-    return {
-      count: 4,
-      // key
-      keyArr: [
-        "nav.header.creator",
-        "nav.icon",
-        "nav.header.product",
-        "common.feature.experience",
-      ],
-      // value
-      valueArr: ["3D Fabric Creator", "Icon name", "Product", "Try It Now!"],
-      keySplitText: [],
-      treeNode: [],
-    };
-  },
-  methods: {
-    inputData(e, index, param) {
-      const { value } = e.target;
-      if (param === "key") {
-        this.keyArr[index] = value;
-        this.keySplitText = textSplit(this.keyArr);
-      } else if (param === "value") {
-        if (this.keyArr[index] !== "") this.valueArr[index] = value;
-      }
-      this.treeNode = arrayToTree(this.keySplitText, this.valueArr);
-    },
+  components: { Menu },
+  setup() {
+    const count = ref(4);
+    const keyArr = ref([
+      "nav.header.creator",
+      "nav.icon",
+      "nav.header.product",
+      "common.feature.experience",
+    ]);
+    const valueArr = ref([
+      "3D Fabric Creator",
+      "Icon name",
+      "Product",
+      "Try It Now!",
+    ]);
+    const keySplitText = ref([]);
+    const treeNode = ref([]);
 
-    addKeyValuePair() {
-      this.count += 1;
-      this.keyArr.push("");
-      this.valueArr.push("");
-    },
-    deleteKeyValuePair(index) {
-      this.count -= 1;
-      this.keyArr.splice(index, 1);
-      this.valueArr.splice(index, 1);
-      this.keySplitText = textSplit(this.keyArr);
-      this.treeNode = arrayToTree(this.keySplitText, this.valueArr);
-    },
-  },
-  mounted() {
-    this.keySplitText = textSplit(this.keyArr);
-    this.treeNode = arrayToTree(this.keySplitText, this.valueArr);
+    const inputData = (e, index, param) => {
+      const { value } = e.target;
+      switch (param) {
+        case "key":
+          keyArr["value"][index] = value;
+          keySplitText["value"] = textSplit(keyArr["value"]);
+          break;
+        case "value":
+          if (keyArr["value"][index] !== "") {
+            valueArr["value"][index] = value;
+          } else {
+            alert("key is empty!");
+          }
+          break;
+
+        default:
+          break;
+      }
+      treeNode["value"] = arrayToTree(keySplitText["value"], valueArr["value"]);
+    };
+
+    const addKeyValuePair = () => {
+      count["value"] += 1;
+      keyArr["value"].push("");
+      valueArr["value"].push("");
+    };
+
+    const deleteKeyValuePair = (index) => {
+      count["value"] -= 1;
+      keyArr["value"].splice(index, 1);
+      valueArr["value"].splice(index, 1);
+      keySplitText["value"] = textSplit(keyArr["value"]);
+      treeNode["value"] = arrayToTree(keySplitText["value"], valueArr["value"]);
+    };
+
+    onMounted(() => {
+      keySplitText["value"] = textSplit(keyArr["value"]);
+      treeNode["value"] = arrayToTree(keySplitText["value"], valueArr["value"]);
+    });
+
+    return {
+      count,
+      keyArr,
+      valueArr,
+      keySplitText,
+      treeNode,
+      inputData,
+      addKeyValuePair,
+      deleteKeyValuePair,
+    };
   },
 };
 </script>
@@ -94,6 +116,7 @@ export default {
 body
   overflow: hidden
   overscroll-behavior: none
+
 #app
   width: 100vw
   height: 100dvh
