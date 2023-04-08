@@ -107,7 +107,7 @@ export default {
     window.addEventListener("pagehide", onBeforeUnload);
 
     getUserInfo();
-    // getRandomUserData();
+    getRandomUserData();
 
     return {};
   },
