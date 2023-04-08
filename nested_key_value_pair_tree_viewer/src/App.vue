@@ -4,7 +4,7 @@
     h1.text-4xl.font-bold.text-white {{ "Nested Key-Value Pair Tree Viewer" }}
   .max-w-screen-xl.mx-auto(class="h-5/6 w-11/12")
     .flex.gap-4.h-full
-      .border.bg-white.p-8.border-slate-500(class="w-2/4")
+      .border.bg-white.p-8.border-slate-500.overflow-auto(class="w-2/4")
         .w-48.h-12.bg-teal-200.flex.items-center.justify-center.ml-auto.cursor-pointer.rounded-md.shadow-gray-200.border.border-slate-500(
           @click="addKeyValuePair",
           class="hover:shadow-lg"
@@ -29,7 +29,7 @@
             @click="deleteKeyValuePair(index - 1)"
           )
             span.text-3xl.text-white -
-      .border.bg-white.p-8.border-slate-500(class="w-2/4")
+      .border.bg-white.p-8.border-slate-500.overflow-auto(class="w-2/4")
         Menu(v-for="item in treeNode", :key="item.name", :item="item")
 </template>
 
@@ -66,11 +66,7 @@ export default {
           keySplitText["value"] = textSplit(keyArr["value"]);
           break;
         case "value":
-          if (keyArr["value"][index] !== "") {
-            valueArr["value"][index] = value;
-          } else {
-            alert("key is empty!");
-          }
+          valueArr["value"][index] = value;
           break;
 
         default:

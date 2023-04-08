@@ -7,7 +7,7 @@ div
         @click.prevent="isOpen = !isOpen"
       ) {{ isOpen ? "[-]" : "[+]" }}
     template(v-else="item.value")
-      span.text-slate-600.text-xl {{ item.value }}
+      span.text-slate-600.text-xl {{ item.name === "" ? "" : item.value }}
   template(v-if="item.children")
     Menu.ml-7(
       v-for="item in item.children",
