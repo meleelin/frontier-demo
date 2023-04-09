@@ -1,8 +1,5 @@
 function textSplit(rawArray) {
-  const result = rawArray.map((item) => {
-    const split = item.split(".");
-    return split;
-  });
+  const result = rawArray.map((item) => item.split("."));
   return result;
 }
 
