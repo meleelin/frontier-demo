@@ -55,24 +55,26 @@ export default {
         .auth()
         .createUserWithEmailAndPassword(email, pwd)
         .then((res) => {
-          alert("success");
+          alert("success!");
           router.push({ path: "/" });
         })
         .catch((error) => {
           switch (error.code) {
             case "auth/email-already-in-use":
-              alert("auth/email-already-in-use");
+              alert("email-already-in-use!");
               break;
             case "auth/invalid-email":
-              alert("auth/invalid-email");
+              alert("invalid-email!");
               break;
             case "auth/weak-password":
-              alert("auth/weak-password");
+              alert("weak-password!");
               break;
             default:
               alert("unknown error");
               break;
           }
+          user.email = "";
+          user.pwd = "";
         });
     };
 
