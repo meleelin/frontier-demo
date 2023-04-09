@@ -56,25 +56,27 @@ export default {
         .then((res) => {
           console.log("res", res);
 
-          alert("success");
+          alert("success!");
           router.push({ path: "/" });
         })
         .catch((error) => {
           console.log("error code", error.code);
           switch (error.code) {
             case "auth/invalid-email":
-              alert("auth/invalid-email");
+              alert("invalid-email!");
               break;
             case "auth/user-not-found":
-              alert("auth/user-not-found");
+              alert("user-not-found!");
               break;
             case "auth/wrong-password":
-              alert("auth/wrong-password");
+              alert("wrong-password!");
               break;
             default:
               alert("unknown error");
               break;
           }
+          user.email = "";
+          user.pwd = "";
         });
     };
 
