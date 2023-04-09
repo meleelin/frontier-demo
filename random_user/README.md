@@ -1,5 +1,21 @@
 # Random User
 
+## 如何執行專案
+
+```zsh=
+# clone 下來後，安裝 dependencies 的套件
+yarn
+
+# 本地開發和測試應用程式
+yarn dev
+
+# 編譯，打包程式碼
+yarn build
+
+```
+
+---
+
 ### 技術要求
 
 之前沒有使用過 tailwind，但有用過 bootstrap，所以語法都蠻熟悉的，然後 tailwind 是手機優先開始撰寫，所以手機板不需要使用前綴詞。
